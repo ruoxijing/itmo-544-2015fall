@@ -3,7 +3,7 @@
 require 'vendor/autoload.php';
 $rds = new Aws\Rds\RdsClient([
     'version' => 'latest',
-    'region'  => 'us-east-1'
+    'region'  => 'us-west-2'
 ]);
 $result = $rds->createDBInstance([
     'AllocatedStorage' => 10,
@@ -47,15 +47,17 @@ $result = $rds->createDBInstance([
 ]);
 print "Create RDS DB results: \n";
 # print_r($rds);
-$result = $rds->waitUntil('DBInstanceAvailable',['DBInstanceIdentifier' => 'mp1-jrh',
+$result = $rds->waitUntil('DBInstanceAvailable',['DBInstanceIdentifier' => 'mp1-jrx',
 ]);
 // Create a table 
 $result = $rds->describeDBInstances([
-    'DBInstanceIdentifier' => 'mp1-jrh',
+    'DBInstanceIdentifier' => 'mp1-jrx',
 ]);
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
 print "============\n". $endpoint . "================\n";
-$link = mysqli_connect($endpoint,"controller","letmein888","3306") or die("Error " . mysqli_error($link)); 
+#$link = mysqli_connect($endpoint,"controller","letmein888","3306") or die("Error " . mysqli_error($link)); 
+#$link = mysqli_connect("itmo544jrhdb","controller","ilovebunnies","3306") or die("Error " . mysqli_error($link)); 
+$link = mysqli_connect("$endpoint","rjing","mypoorphp","3306") or die("Error " . mysqli_error($link)); 
 echo "Here is the result: " . $link;
 $sql = "CREATE TABLE comments 
 (
