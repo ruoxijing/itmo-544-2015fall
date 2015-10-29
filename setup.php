@@ -60,9 +60,14 @@ echo "Here is the result: " . $link;
 $sql = "CREATE TABLE comments 
 (
 ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-PosterName VARCHAR(32),
-Title VARCHAR(32),
-Content VARCHAR(500)
+uname VARCHAR(20) not null,
+email VARCHAR(20) not null,
+phone VARCHAR(20) not null,
+rawS3url VARCHAR(256) not null,
+finishedS3url VARCHAR(256) not null,
+jpgfilename VARCHAR(256) not null,
+tinyInt INT(3) not null,
+Time datetime NOT NULL DEFAULT GETDATE()
 )";
 $con->query($sql);
 ?>
