@@ -1,75 +1,69 @@
 <?php
-// Start the session^M
+
 require 'vendor/autoload.php';
-$rds = new Aws\Rds\RdsClient([
-    'version' => 'latest',
-    'region'  => 'us-west-2'
-]);
-$result = $rds->createDBInstance([
-    'AllocatedStorage' => 10,
-    #'AutoMinorVersionUpgrade' => true || false,
-    #'AvailabilityZone' => '<string>',
-    #'BackupRetentionPeriod' => <integer>,
-   # 'CharacterSetName' => '<string>',
-   # 'CopyTagsToSnapshot' => true || false,
-   # 'DBClusterIdentifier' => '<string>',
-    'DBInstanceClass' => 'db.t1.micro', // REQUIRED
-    'DBInstanceIdentifier' => 'mp1-jrh', // REQUIRED
-    'DBName' => 'customerrecords',
-    #'DBParameterGroupName' => '<string>',
-    #'DBSecurityGroups' => ['<string>', ...],
-    #'DBSubnetGroupName' => '<string>',
-    'Engine' => 'MySQL', // REQUIRED
-    'EngineVersion' => '5.5.41',
-    #'Iops' => <integer>,
-    #'KmsKeyId' => '<string>',
-   # 'LicenseModel' => '<string>',
-  'MasterUserPassword' => 'letmein888',
-    'MasterUsername' => 'controller',
-    #'MultiAZ' => true || false,
-    #'OptionGroupName' => '<string>',
-    #'Port' => <integer>,
-    #'PreferredBackupWindow' => '<string>',
-    #'PreferredMaintenanceWindow' => '<string>',
-    'PubliclyAccessible' => true,
-    #'StorageEncrypted' => true || false,
-    #'StorageType' => '<string>',
-   # 'Tags' => [
-   #     [
-   #         'Key' => '<string>',
-   #         'Value' => '<string>',
-   #     ],
-        // ...
-   # ],
-    #'TdeCredentialArn' => '<string>',
-    #'TdeCredentialPassword' => '<string>',
-   # 'VpcSecurityGroupIds' => ['<string>', ...],
-]);
-print "Create RDS DB results: \n";
-# print_r($rds);
-$result = $rds->waitUntil('DBInstanceAvailable',['DBInstanceIdentifier' => 'mp1-jrx',
-]);
-// Create a table 
-$result = $rds->describeDBInstances([
-    'DBInstanceIdentifier' => 'mp1-jrx',
-]);
-$endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
-print "============\n". $endpoint . "================\n";
-#$link = mysqli_connect($endpoint,"controller","letmein888","3306") or die("Error " . mysqli_error($link)); 
-#$link = mysqli_connect("itmo544jrhdb","controller","ilovebunnies","3306") or die("Error " . mysqli_error($link)); 
-$link = mysqli_connect("$endpoint","rjing","mypoorphp","3306") or die("Error " . mysqli_error($link)); 
-echo "Here is the result: " . $link;
-$sql = "CREATE TABLE comments 
+
+use Aws\Rds\RdsClient;
+$client = RdsClient::factory(array(
+'region'  => 'us-west-2'
+));
+
+
+$result = $client->describeDBInstances(array(
+    'DBInstanceIdentifier' => 'itmo544jrhdb',
+));
+
+
+$endpoint = ""; 
+
+
+foreach ($result->getPath('DBInstances/*/Endpoint/Address') as $ep) {
+    // Do something with the message
+    echo "============". $ep . "================";
+    $endpoint = $ep;
+}
+
+
+
+echo "begin database";
+#$link = mysqli_connect($endpoint,"controller","ilovebunnies","itmo544db") or die("Error " . mysqli_error($link));
+$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544db") or die("Error " . mysqli_error($link));
+/* check connection */
+if (mysqli_connect_errno()) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+}
+/*
+$delete_table = 'DELETE TABLE student';
+$del_tbl = $link->query($delete_table);
+if ($delete_table) {
+        echo "Table student has been deleted";
+}
+else {
+        echo "error!!";
+
+}
+*/
+$create_table = 'CREATE TABLE IF NOT EXISTS items  
 (
-ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-uname VARCHAR(20) not null,
-email VARCHAR(20) not null,
-phone VARCHAR(20) not null,
-rawS3url VARCHAR(256) not null,
-finishedS3url VARCHAR(256) not null,
-jpgfilename VARCHAR(256) not null,
-tinyInt INT(3) not null,
-Time datetime NOT NULL DEFAULT GETDATE()
-)";
-$con->query($sql);
+    id INT NOT NULL AUTO_INCREMENT,
+    email VARCHAR(200) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    filename VARCHAR(255) NOT NULL,
+    s3rawurl VARCHAR(255) NOT NULL,
+    s3finishedurl VARCHAR(255) NOT NULL,
+    status INT NOT NULL,
+    issubscribed INT NOT NULL,
+    PRIMARY KEY(id)
+)';
+
+
+
+$create_tbl = $link->query($create_table);
+if ($create_table) {
+	echo "Table is created or No error returned.";
+}
+else {
+        echo "error!!";  
+}
+$link->close();
 ?>
