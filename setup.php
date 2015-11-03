@@ -26,7 +26,7 @@ foreach ($result->getPath('DBInstances/*/Endpoint/Address') as $ep) {
 
 echo "begin database";
 #$link = mysqli_connect($endpoint,"controller","ilovebunnies","itmo544db") or die("Error " . mysqli_error($link));
-$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544db") or die("Error " . mysqli_error($link));
+$link = mysqli_connect($endpoint,"rjing","mypoorphp","jrxdb") or die("Error " . mysqli_error($link));
 /* check connection */
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
