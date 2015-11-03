@@ -3,7 +3,7 @@
 session_start();
 // In PHP versions earlier than 4.1.0, $HTTP_POST_FILES should be used instead
 // of $_FILES.
-echo $_POST['useremail'];
+echo $POST['useremail'];
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 echo '<pre>';
@@ -16,44 +16,50 @@ echo 'Here is some more debugging info:';
 print_r($_FILES);
 print "</pre>";
 require 'vendor/autoload.php';
-#use Aws\S3\S3Client;
-#$client = S3Client::factory();
+use Aws\S3\S3Client;
+
+$client = S3Client::factory(array(
+'version' =>'latest',
+'region'  => 'us-west-2'
+));
+
 $s3 = new Aws\S3\S3Client([
     'version' => 'latest',
-    'region'  => 'us-east-1'
+    'region'  => 'us-west-2'
 ]);
-$bucket = uniqid("php-jrh-",false);
-#$result = $client->createBucket(array(
-#    'Bucket' => $bucket
-#));
-# AWS PHP SDK version 3 create bucket
-$result = $s3->createBucket([
-    'ACL' => 'public-read',
+
+$bucket = uniqid("php-jrx-",false);
+$result = $client->createBucket(array(
     'Bucket' => $bucket
-]);
-#$client->waitUntilBucketExists(array('Bucket' => $bucket));
-#Old PHP SDK version 2
-#$key = $uploadfile;
-#$result = $client->putObject(array(
+));
+# AWS PHP SDK version 3 create bucket
+#$result = $s3->createBucket([
 #    'ACL' => 'public-read',
-#    'Bucket' => $bucket,
-#    'Key' => $key,
-#    'SourceFile' => $uploadfile 
-#));
-# PHP version 3
-$result = $client->putObject([
+#    'Bucket' => $bucket
+#]);
+$client->waitUntilBucketExists(array('Bucket' => $bucket));
+#Old PHP SDK version 2
+$key = $uploadfile;
+$result = $client->putObject(array(
     'ACL' => 'public-read',
     'Bucket' => $bucket,
-   'Key' => $uploadfile
-]);  
+    'Key' => $key,
+    'SourceFile' => $uploadfile 
+));
+# PHP version 3
+#$result = $client->putObject([
+#    'ACL' => 'public-read',
+#    'Bucket' => $bucket,
+#   'Key' => $uploadfile
+#]);  
 $url = $result['ObjectURL'];
 echo $url;
 $rds = new Aws\Rds\RdsClient([
     'version' => 'latest',
-    'region'  => 'us-east-1'
+    'region'  => 'us-west-2'
 ]);
 $result = $rds->describeDBInstances([
-    'DBInstanceIdentifier' => 'mp1-jrh',
+    'DBInstanceIdentifier' => 'itmo544jrxdb',
     #'Filters' => [
     #    [
     #        'Name' => '<string>', // REQUIRED
@@ -65,9 +71,16 @@ $result = $rds->describeDBInstances([
    # 'MaxRecords' => <integer>,
 ]);
 $endpoint = $result['DBInstances']['Endpoint']['Address']
-    echo "============\n". $endpoint . "================";^M
+    echo "============\n". $endpoint . "================";
+    echo $DBInstances;
+    echo $Endpoint;
+    echo $Address;
+    echo $endpoint;
+    
 //echo "begin database";^M
-$link = mysqli_connect($endpoint,"controller","letmein888","customerrecords") or die("Error " . mysqli_error($link));
+#$link = mysqli_connect($endpoint,"controller","letmein888","customerrecords") or die("Error " . mysqli_error($link));
+#$link = mysqli_connect("jrxdb.cwom1zatgb1y.us-west-2.rds.amazonaws.com","rjing","mypoorphp","jrxdb") or die("Error " . mysqli_error($link));
+$link = mysqli_connect($endpoint,"rjing","mypoorphp","jrxdb") or die("Error " . mysqli_error($link));
 /* check connection */
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
