@@ -15,18 +15,18 @@ $client = RdsClient::factory(array(
 ));
 
 $result = $client->describeDBInstances(array(
-    'DBInstanceIdentifier' => 'itmo544jrxdb',
+    'DBInstanceIdentifier' => 'jrxdb',
 ));
 
-$endpoint = "";
+#$endpoint = "";
 
-foreach ($result->getPath('DBInstances/*/Endpoint/Address') as $ep) {
+#foreach ($result->getPath('DBInstances/*/Endpoint/Address') as $ep) {
     // Do something with the message
-    echo "============". $ep . "================";
-    $endpoint = $ep;
-}   
+#    echo "============". $ep . "================";
+#    $endpoint = $ep;
+#}   
 //echo "begin database";
-$link = mysqli_connect($endpoint,"rjing","mypoorphp","jrxdb") or die("Error " . mysqli_error($link));
+$link = mysqli_connect("jrxdb.cwom1zatgb1y.us-west-2.rds.amazonaws.com","rjing","mypoorphp","jrxdb") or die("Error " . mysqli_error($link));
 
 /* check connection */
 if (mysqli_connect_errno()) {
