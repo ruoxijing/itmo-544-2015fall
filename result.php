@@ -62,7 +62,7 @@ $rds = new Aws\Rds\RdsClient([
     'region'  => 'us-west-2'
 ]);
 $result = $rds->describeDBInstances([
-    'DBInstanceIdentifier' => 'jrxdb',
+    'DBInstanceIdentifier' => 'itmo544jrxdb',
     #'Filters' => [
     #    [
     #        'Name' => '<string>', // REQUIRED
