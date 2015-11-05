@@ -61,8 +61,8 @@ $rds = new Aws\Rds\RdsClient([
 #    'version' => 'latest',
     'region'  => 'us-west-2'
 ]);
-$result = $rds->describeDBInstances([
-    'DBInstanceIdentifier' => 'itmo544jrxdb',
+#$result = $rds->describeDBInstances([
+#    'DBInstanceIdentifier' => 'itmo544jrxdb',
     #'Filters' => [
     #    [
     #        'Name' => '<string>', // REQUIRED
@@ -72,7 +72,7 @@ $result = $rds->describeDBInstances([
    # ],
    # 'Marker' => '<string>',
    # 'MaxRecords' => <integer>,
-]);
+#]);
 #$endpoint = $result['DBInstances']['Endpoint']['Address']
 #    echo "============\n". $endpoint . "================";
 
