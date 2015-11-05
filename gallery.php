@@ -7,11 +7,11 @@
 session_start();
 $email = $_POST["email"];
 echo $email;
-require '../itmo-544-env/vendor/autoload.php';
+require 'vendor/autoload.php';
 
 use Aws\Rds\RdsClient;
 $client = RdsClient::factory(array(
- #'version'=>'latest',
+ 'version'=>'latest',
 'region'  => 'us-west-2'
 ));
 
