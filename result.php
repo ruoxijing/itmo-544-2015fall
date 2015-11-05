@@ -58,7 +58,7 @@ $url = $result['ObjectURL'];
 echo $url;
 
 $rds = new Aws\Rds\RdsClient([
-    'version' => 'latest',
+#    'version' => 'latest',
     'region'  => 'us-west-2'
 ]);
 $result = $rds->describeDBInstances([
