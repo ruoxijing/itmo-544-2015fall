@@ -4,6 +4,7 @@ session_start();
 // In PHP versions earlier than 4.1.0, $HTTP_POST_FILES should be used instead
 // of $_FILES.
 echo $POST['useremail'];
+echo $_POST['phone'];
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 echo '<pre>';
@@ -16,46 +17,46 @@ echo 'Here is some more debugging info:';
 print_r($_FILES);
 print "</pre>";
 require '../itmo-544-env/vendor/autoload.php';
-#use Aws\S3\S3Client;
+use Aws\S3\S3Client;
 
-#$client = S3Client::factory(array(
-#'version' =>'latest',
-#'region'  => 'us-west-2'
-#));
+$client = S3Client::factory(array(
+'version' =>'latest',
+'region'  => 'us-west-2'
+));
 
-$s3 = new Aws\S3\S3Client([
-    'version' => 'latest',
-    'region'  => 'us-west-2'
-]);
+#$s3 = new Aws\S3\S3Client([
+#    'version' => 'latest',
+#    'region'  => 'us-west-2'
+#]);
 
 $bucket = uniqid("php-jrx-",false);
-#$result = $client->createBucket(array(
-#    'Bucket' => $bucket
-#));
+$result = $client->createBucket(array(
+    'Bucket' => $bucket
+));
 # AWS PHP SDK version 3 create bucket
 $result = $s3->createBucket([
     'ACL' => 'public-read',
     'Bucket' => $bucket
 ]);
-
+$client->waitUntil('BucketExists', array('Bucket' => $bucket));
 #$client->waitUntilBucketExists(array('Bucket' => $bucket));
 #Old PHP SDK version 2
-#$key = $uploadfile;
-#$result = $client->putObject(array(
-#    'ACL' => 'public-read',
-#    'Bucket' => $bucket,
-#    'Key' => $key,
-#    'SourceFile' => $uploadfile 
-#));
-# PHP version 3
-$result = $s3->putObject([
+$key = $uploadfile;
+$result = $client->putObject(array(
     'ACL' => 'public-read',
     'Bucket' => $bucket,
-   'Key' => $uploadfile
-]);  
+    'Key' => $key,
+    'SourceFile' => $uploadfile 
+));
+# PHP version 3
+#$result = $s3->putObject([
+#    'ACL' => 'public-read',
+#    'Bucket' => $bucket,
+#   'Key' => $uploadfile
+#]);  
 
-$url = $result['ObjectURL'];
-echo $url;
+#$url = $result['ObjectURL'];
+#echo $url;
 
 $rds = new Aws\Rds\RdsClient([
     'version' => 'latest',
@@ -108,7 +109,7 @@ $link->real_query("SELECT * FROM items");
 $res = $link->use_result();
 echo "Result set order...\n";
 while ($row = $res->fetch_assoc()) {
-    echo $row['id'] . " " . $row['email']. " " . $row['phone'];
+    echo $row['id'] . " " .$row['email']. " " .$row['phone'];
 }
 $link->close();
 //add code to detect if subscribed to SNS topic 
