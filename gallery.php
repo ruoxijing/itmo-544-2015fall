@@ -6,7 +6,9 @@
 <?php
 session_start();
 $email = $_POST["email"];
+
 echo $email;
+echo $POST['phone'];
 require 'vendor/autoload.php';
 
 use Aws\Rds\RdsClient;
