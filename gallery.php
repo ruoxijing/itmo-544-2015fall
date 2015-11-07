@@ -18,15 +18,20 @@ $result = $client->describeDBInstances(array(
     'DBInstanceIdentifier' => 'jrx-db',
 ));
 $endpoint = "";
-foreach ($result->getPath('DBInstances/*/Endpoint/Address') as $ep) {
+#foreach ($result->getPath('DBInstances/*/Endpoint/Address') as $ep) {
     // Do something with the message
-    echo "============". $ep . "================";
-    $endpoint = $ep;
-}   
+#    echo "============". $ep . "================";
+#    $endpoint = $ep;
+#}   
+#print_r($result);
+#$endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
+#    echo "============\n". $endpoint . "================";
+
+#print_r($endpoint);  
 //echo "begin database";
 #$link = mysqli_connect($endpoint,"controller","letmein888","customerrecords") or die("Error " . mysqli_error($link));
-#$link = mysqli_connect("jrxdb.cwom1zatgb1y.us-west-2.rds.amazonaws.com","rjing","mypoorphp","itmo544mp1",3306) or die("Error " . mysqli_error($link));
-$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1",3306) or die("Error " . mysqli_error($link));
+$link = mysqli_connect("jrxdb.cwom1zatgb1y.us-west-2.rds.amazonaws.com","rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
+#$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1",3306) or die("Error " . mysqli_error($link));
 
 /* check connection */
 if (mysqli_connect_errno()) {
