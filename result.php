@@ -17,28 +17,28 @@ echo 'Here is some more debugging info:';
 print_r($_FILES);
 print "</pre>";
 require 'vendor/autoload.php';
-#use Aws\S3\S3Client;
+use Aws\S3\S3Client;
 
-#$client = S3Client::factory(array(
-#'version' =>'latest',
-#'region'  => 'us-west-2'
-#));
+$client = S3Client::factory(array(
+'version' =>'latest',
+'region'  => 'us-west-2'
+));
 
-$s3 = new Aws\S3\S3Client([
-    'version' => 'latest',
-    'region'  => 'us-west-2'
-]);
+#$s3 = new Aws\S3\S3Client([
+#    'version' => 'latest',
+#    'region'  => 'us-west-2'
+#]);
 
 $bucket = uniqid("php-jrx-",false);
-#$result = $client->createBucket(array(
-#    'Bucket' => $bucket
-#));
-# AWS PHP SDK version 3 create bucket
-$result = $s3->createBucket([
-    'ACL' => 'public-read',
+$result = $client->createBucket(array(
     'Bucket' => $bucket
-]);
-#$client->waitUntil('BucketExists', array('Bucket' => $bucket));
+));
+# AWS PHP SDK version 3 create bucket
+#$result = $s3->createBucket([
+#    'ACL' => 'public-read',
+#    'Bucket' => $bucket
+#]);
+$client->waitUntil('BucketExists', array('Bucket' => $bucket));
 #$client->waitUntilBucketExists(array('Bucket' => $bucket));
 #Old PHP SDK version 2
 $key = $uploadfile;
@@ -58,10 +58,10 @@ $result = $s3->putObject(array(
 $url = $result['ObjectURL'];
 echo $url;
 
-#$rds = new Aws\Rds\RdsClient([
-#    'version' => 'latest',
-#    'region'  => 'us-west-2'
-#]);
+$rds = new Aws\Rds\RdsClient([
+    'version' => 'latest',
+    'region'  => 'us-west-2'
+]);
 use Aws\Rds\RdsClient;
 $client = RdsClient::factory(array(
 'version' =>'latest',	
@@ -71,8 +71,8 @@ $client = RdsClient::factory(array(
 #$result = $rds->waitUntil('DBInstanceAvailable',['DBInstanceIdentifier' => 'jrx-db'
 #]);
 
-#$result = $rds->describeDBInstances([
-#   'DBInstanceIdentifier' => 'jrx-db'
+$result = $rds->describeDBInstances([
+   'DBInstanceIdentifier' => 'jrx-db'
     #'Filters' => [
     #    [
     #        'Name' => '<string>', // REQUIRED
@@ -82,7 +82,7 @@ $client = RdsClient::factory(array(
    # ],
    # 'Marker' => '<string>',
    # 'MaxRecords' => <integer>,
-#]);
+]);
 print_r($result);
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
     echo "============\n". $endpoint . "================";
@@ -91,7 +91,7 @@ print_r($endpoint);
 //echo "begin database";^M
 #$link = mysqli_connect($endpoint,"controller","letmein888","customerrecords") or die("Error " . mysqli_error($link));
 #$link = mysqli_connect("jrxdb.cwom1zatgb1y.us-west-2.rds.amazonaws.com","rjing","mypoorphp","jrx-db",3306) or die("Error " . mysqli_error($link));
-$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1",3306) or die("Error " . mysqli_error($link));
+$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
 /* check connection */
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
