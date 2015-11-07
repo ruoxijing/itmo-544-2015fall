@@ -71,8 +71,8 @@ $client = RdsClient::factory(array(
 #$result = $rds->waitUntil('DBInstanceAvailable',['DBInstanceIdentifier' => 'jrx-db'
 #]);
 
-$result = $rds->describeDBInstances([
-    'DBInstanceIdentifier' => 'jrx-db'
+#$result = $rds->describeDBInstances([
+#   'DBInstanceIdentifier' => 'jrx-db'
     #'Filters' => [
     #    [
     #        'Name' => '<string>', // REQUIRED
@@ -82,7 +82,7 @@ $result = $rds->describeDBInstances([
    # ],
    # 'Marker' => '<string>',
    # 'MaxRecords' => <integer>,
-]);
+#]);
 print_r($result);
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
     echo "============\n". $endpoint . "================";
