@@ -6,11 +6,9 @@
 <?php
 session_start();
 $email = $_POST["email"];
-$phone = $_POST["phone"];
 echo $email;
-echo $phone;
 require 'vendor/autoload.php';
-
+date("Y-m-d", $timestamp);
 use Aws\Rds\RdsClient;
 $client = RdsClient::factory(array(
  'version'=>'latest',
