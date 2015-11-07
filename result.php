@@ -68,8 +68,8 @@ $client = RdsClient::factory(array(
 'region' => 'us-west-2'
 ));
 
-$result = $rds->waitUntil('DBInstanceAvailable',['DBInstanceIdentifier' => 'jrx-db'
-]);
+#$result = $rds->waitUntil('DBInstanceAvailable',['DBInstanceIdentifier' => 'jrx-db'
+#]);
 
 $result = $rds->describeDBInstances([
     'DBInstanceIdentifier' => 'jrx-db'
