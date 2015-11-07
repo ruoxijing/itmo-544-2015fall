@@ -38,7 +38,7 @@ $result = $s3->createBucket([
     'ACL' => 'public-read',
     'Bucket' => $bucket
 ]);
-$client->waitUntil('BucketExists', array('Bucket' => $bucket));
+#$client->waitUntil('BucketExists', array('Bucket' => $bucket));
 #$client->waitUntilBucketExists(array('Bucket' => $bucket));
 #Old PHP SDK version 2
 $key = $uploadfile;
@@ -80,7 +80,7 @@ $rds = new Aws\Rds\RdsClient([
     
 //echo "begin database";^M
 #$link = mysqli_connect($endpoint,"controller","letmein888","customerrecords") or die("Error " . mysqli_error($link));
-$link = mysqli_connect("jrxdb.cwom1zatgb1y.us-west-2.rds.amazonaws.com","rjing","mypoorphp","jrxdb") or die("Error " . mysqli_error($link));
+$link = mysqli_connect("jrxdb.cwom1zatgb1y.us-west-2.rds.amazonaws.com","rjing","mypoorphp","jrxdb",3306) or die("Error " . mysqli_error($link));
 #$link = mysqli_connect($endpoint,"rjing","mypoorphp","jrxdb") or die("Error " . mysqli_error($link));
 /* check connection */
 if (mysqli_connect_errno()) {
