@@ -72,7 +72,7 @@ $result = $rds->waitUntil('DBInstanceAvailable',['DBInstanceIdentifier' => 'jrx-
 )];
 
 $result = $rds->describeDBInstances([
-    'DBInstanceIdentifier' => 'jrx-db',
+    'DBInstanceIdentifier' => 'jrx-db'
     #'Filters' => [
     #    [
     #        'Name' => '<string>', // REQUIRED
@@ -84,7 +84,7 @@ $result = $rds->describeDBInstances([
    # 'MaxRecords' => <integer>,
 ]);
 print_r($result);
-$endpoint = $result['DBInstances'][0]['Endpoint']['Address']
+$endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
     echo "============\n". $endpoint . "================";
 
 print_r($endpoint);  
