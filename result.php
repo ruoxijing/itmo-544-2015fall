@@ -91,7 +91,7 @@ print_r($endpoint);
 //echo "begin database";^M
 #$link = mysqli_connect($endpoint,"controller","letmein888","customerrecords") or die("Error " . mysqli_error($link));
 #$link = mysqli_connect("jrxdb.cwom1zatgb1y.us-west-2.rds.amazonaws.com","rjing","mypoorphp","jrx-db",3306) or die("Error " . mysqli_error($link));
-$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmojrxdb",3306) or die("Error " . mysqli_error($link));
+$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1",3306) or die("Error " . mysqli_error($link));
 /* check connection */
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
