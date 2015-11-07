@@ -3,7 +3,8 @@
 session_start();
 // In PHP versions earlier than 4.1.0, $HTTP_POST_FILES should be used instead
 // of $_FILES.
-echo $POST['useremail'];
+$useremail = $_POST["useremail"];
+echo $useremail;
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 echo '<pre>';
@@ -23,10 +24,10 @@ $client = S3Client::factory(array(
 'region'  => 'us-west-2'
 ));
 
-#$s3 = new Aws\S3\S3Client([
-#    'version' => 'latest',
-#    'region'  => 'us-west-2'
-#]);
+$s3 = new Aws\S3\S3Client([
+    'version' => 'latest',
+    'region'  => 'us-west-2'
+]);
 
 $bucket = uniqid("php-jrx-",false);
 $result = $client->createBucket(array(
