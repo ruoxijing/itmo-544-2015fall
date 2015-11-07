@@ -8,26 +8,25 @@ session_start();
 $email = $_POST["email"];
 echo $email;
 require 'vendor/autoload.php';
-date("Y-m-d", $timestamp);
 use Aws\Rds\RdsClient;
 $client = RdsClient::factory(array(
  'version'=>'latest',
 'region'  => 'us-west-2'
 ));
 
-#$result = $client->describeDBInstances(array(
-#    'DBInstanceIdentifier' => 'itmo544jrxdb',
-#));
-
-#$endpoint = "";
-
-#foreach ($result->getPath('DBInstances/*/Endpoint/Address') as $ep) {
+$result = $client->describeDBInstances(array(
+    'DBInstanceIdentifier' => 'jrx-db',
+));
+$endpoint = "";
+foreach ($result->getPath('DBInstances/*/Endpoint/Address') as $ep) {
     // Do something with the message
-#    echo "============". $ep . "================";
-#    $endpoint = $ep;
-#}   
+    echo "============". $ep . "================";
+    $endpoint = $ep;
+}   
 //echo "begin database";
-$link = mysqli_connect("jrxdb.cwom1zatgb1y.us-west-2.rds.amazonaws.com","rjing","mypoorphp","jrxdb") or die("Error " . mysqli_error($link));
+#$link = mysqli_connect($endpoint,"controller","letmein888","customerrecords") or die("Error " . mysqli_error($link));
+#$link = mysqli_connect("jrxdb.cwom1zatgb1y.us-west-2.rds.amazonaws.com","rjing","mypoorphp","itmo544mp1",3306) or die("Error " . mysqli_error($link));
+$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1",3306) or die("Error " . mysqli_error($link));
 
 /* check connection */
 if (mysqli_connect_errno()) {
