@@ -15,7 +15,7 @@ if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
 echo 'Here is some more debugging info:';
 print_r($_FILES);
 print "</pre>";
-require '../itmo-544-env/vendor/autoload.php';
+require 'vendor/autoload.php';
 use Aws\S3\S3Client;
 
 $client = S3Client::factory(array(
