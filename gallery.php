@@ -30,8 +30,8 @@ $client = RdsClient::factory(array(
 #print_r($endpoint);  
 //echo "begin database";
 #$link = mysqli_connect($endpoint,"controller","letmein888","customerrecords") or die("Error " . mysqli_error($link));
-$link = mysqli_connect("jrx-db.cwom1zatgb1y.us-west-2.rds.amazonaws.com","rjing","mypoorphp","itmo544mp1");// or die("Error " . mysqli_error($link));
-#$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1",3306) or die("Error " . mysqli_error($link));
+$link = mysqli_connect("jrx-db.cwom1zatgb1y.us-west-2.rds.amazonaws.com","rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
+#$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
 
 /* check connection */
 if (mysqli_connect_errno()) {
@@ -40,7 +40,7 @@ if (mysqli_connect_errno()) {
 }
 
 //below line is unsafe - $email is not checked for SQL injection -- don't do this in real life or use an ORM instead
-$link->real_query("SELECT * FROM items WHERE email = '$email'");
+$link->real_query("SELECT * FROM mp1tb WHERE email = '$email'");
 //$link->real_query("SELECT * FROM items");
 $res = $link->use_result();
 echo "Result set order...\n";
