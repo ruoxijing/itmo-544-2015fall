@@ -14,8 +14,11 @@ $client = RdsClient::factory(array(
 'region'  => 'us-west-2'
 ));
 
+$result = $client->describeDBInstances([
+   'DBInstanceIdentifier' => 'jrx-db'
+]);
 #$result = $client->describeDBInstances(array(
-#    'DBInstanceIdentifier' => 'jrx-db',
+#    'DBInstanceIdentifier' => 'jrx',
 #));
 #$endpoint = "";
 #foreach ($result->getPath('DBInstances/*/Endpoint/Address') as $ep) {
@@ -24,14 +27,14 @@ $client = RdsClient::factory(array(
 #    $endpoint = $ep;
 #}   
 #print_r($result);
-#$endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
-#    echo "============\n". $endpoint . "================";
+$endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
+    echo "============\n". $endpoint . "================";
 
 #print_r($endpoint);  
 //echo "begin database";
 #$link = mysqli_connect($endpoint,"controller","letmein888","customerrecords") or die("Error " . mysqli_error($link));
-$link = mysqli_connect("jrx-db.cwom1zatgb1y.us-west-2.rds.amazonaws.com","rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
-#$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
+#$link = mysqli_connect("jrx-db.cwom1zatgb1y.us-west-2.rds.amazonaws.com","rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
+$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
 
 /* check connection */
 if (mysqli_connect_errno()) {
