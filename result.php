@@ -67,8 +67,8 @@ $rds = RdsClient::factory(array(
 #$result = $rds->waitUntil('DBInstanceAvailable',['DBInstanceIdentifier' => 'jrx-db'
 #]);
 
-$result = $rds->describeDBInstances([
-   'DBInstanceIdentifier' => 'jrx-db'
+#$result = $rds->describeDBInstances([
+#   'DBInstanceIdentifier' => 'jrx-db'
     #'Filters' => [
     #    [
     #        'Name' => '<string>', // REQUIRED
@@ -78,23 +78,23 @@ $result = $rds->describeDBInstances([
    # ],
    # 'Marker' => '<string>',
    # 'MaxRecords' => <integer>,
-]);
+#]);
 #print_r($result);
-$endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
-    echo "============\n". $endpoint . "================";
+#$endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
+#    echo "============\n". $endpoint . "================";
 
 #print_r($endpoint);  
 //echo "begin database";^M
 #$link = mysqli_connect($endpoint,"controller","letmein888","customerrecords") or die("Error " . mysqli_error($link));
-#$link = mysqli_connect("jrx-db.cwom1zatgb1y.us-west-2.rds.amazonaws.com","rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
-$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
+$link = mysqli_connect("jrx-db.cwom1zatgb1y.us-west-2.rds.amazonaws.com","rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
+#$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
 /* check connection */
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
     exit();
 }
 /* Prepared statement, stage 1: prepare */
-if (!($stmt = $link->prepare("INSERT INTO items (id, email,phone,filename,s3rawurl,s3finishedurl,status,issubscribed) VALUES (NULL,?,?,?,?,?,?,?)"))) {
+if (!($stmt = $link->prepare("INSERT INTO mp1tb (id, email,phone,filename,s3rawurl,s3finishedurl,status,issubscribed) VALUES (NULL,?,?,?,?,?,?,?)"))) {
     echo "Prepare failed: (" . $link->errno . ") " . $link->error;
 }
 $email = $_POST['useremail'];
@@ -111,7 +111,7 @@ if (!$stmt->execute()) {
 printf("%d Row inserted.\n", $stmt->affected_rows);
 /* explicit close recommended */
 $stmt->close();
-$link->real_query("SELECT * FROM items");
+$link->real_query("SELECT * FROM mp1tb");
 $res = $link->use_result();
 echo "Result set order...\n";
 while ($row = $res->fetch_assoc()) {
