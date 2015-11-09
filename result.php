@@ -21,7 +21,7 @@ use Aws\S3\S3Client;
 
 $client = S3Client::factory(array(
 'version' =>'latest',
-'region'  => 'us-west-2'
+'region'  => 'us-east-1'
 ));
 
 #$s3 = new Aws\S3\S3Client([
@@ -61,14 +61,14 @@ echo $url;
 use Aws\Rds\RdsClient;
 $rds = RdsClient::factory(array(
 'version' =>'latest',	
-'region' => 'us-west-2'
+'region' => 'us-east-1'
 ));
 
 #$result = $rds->waitUntil('DBInstanceAvailable',['DBInstanceIdentifier' => 'jrx-db'
 #]);
 
 $result = $rds->describeDBInstances([
-   'DBInstanceIdentifier' => 'jrx-db'
+   'DBInstanceIdentifier' => 'jrx-db',
     #'Filters' => [
     #    [
     #        'Name' => '<string>', // REQUIRED
