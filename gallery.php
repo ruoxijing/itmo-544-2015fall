@@ -11,11 +11,11 @@ require 'vendor/autoload.php';
 use Aws\Rds\RdsClient;
 $client = RdsClient::factory(array(
  'version'=>'latest',
-'region'  => 'us-west-2'
+'region'  => 'us-east-1'
 ));
 
 $result = $client->describeDBInstances([
-   'DBInstanceIdentifier' => 'jrx-db'
+   'DBInstanceIdentifier' => 'jrx-db',
 ]);
 #$result = $client->describeDBInstances(array(
 #    'DBInstanceIdentifier' => 'jrx',
