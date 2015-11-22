@@ -24,10 +24,6 @@ $client = S3Client::factory(array(
 'region'  => 'us-east-1'
 ));
 
-#$s3 = new Aws\S3\S3Client([
-#    'version' => 'latest',
-#    'region'  => 'us-west-2'
-#]);
 
 $bucket = uniqid("php-jrx-",false);
 $result = $client->createBucket(array(
@@ -42,12 +38,17 @@ $client->waitUntil('BucketExists', array('Bucket' => $bucket));
 #$client->waitUntilBucketExists(array('Bucket' => $bucket));
 #Old PHP SDK version 2
 $key = $uploadfile;
-$result = $client->putObject(array(
-    'ACL' => 'public-read',
-    'Bucket' => $bucket,
-    'Key' => $key,
-    'SourceFile' => $uploadfile 
+
+$result = $client->describeDBInstances(array(
+    'DBInstanceIdentifier' => 'jrxdb',
 ));
+
+#$result = $client->putObject(array(
+#    'ACL' => 'public-read',
+#    'Bucket' => $bucket,
+#    'Key' => $key,
+#    'SourceFile' => $uploadfile 
+#));
 # PHP version 3
 #$result = $s3->putObject([
 #    'ACL' => 'public-read',
@@ -55,14 +56,8 @@ $result = $client->putObject(array(
 #   'Key' => $uploadfile
 #]);  
 
-$url = $result['ObjectURL'];
-echo $url;
-
-use Aws\Rds\RdsClient;
-$rds = RdsClient::factory(array(
-'version' =>'latest',	
-'region' => 'us-east-1'
-));
+#$url = $result['ObjectURL'];
+#echo $url;
 
 #$result = $rds->waitUntil('DBInstanceAvailable',['DBInstanceIdentifier' => 'jrx-db'
 #]);
@@ -79,15 +74,15 @@ $rds = RdsClient::factory(array(
    # 'Marker' => '<string>',
    # 'MaxRecords' => <integer>,
 #]);
-#print_r($result);
-#$endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
-#    echo "============\n". $endpoint . "================";
+
+$endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
+    echo "============\n". $endpoint . "================";
 
 #print_r($endpoint);  
 //echo "begin database";^M
 #$link = mysqli_connect($endpoint,"controller","letmein888","customerrecords") or die("Error " . mysqli_error($link));
-$link = mysqli_connect("jrxdb.ctwa8lj8lt5b.us-east-1.rds.amazonaws.com","rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
-#$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
+#$link = mysqli_connect("jrxdb.ctwa8lj8lt5b.us-east-1.rds.amazonaws.com","rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
+$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
 /* check connection */
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
