@@ -15,7 +15,7 @@ $client = RdsClient::factory(array(
 ));
 
 $result = $client->describeDBInstances([
-   'DBInstanceIdentifier' => 'jrx-db',
+   'DBInstanceIdentifier' => 'jrxdb',
 ]);
 #$result = $client->describeDBInstances(array(
 #    'DBInstanceIdentifier' => 'jrx',
