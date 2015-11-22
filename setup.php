@@ -9,7 +9,7 @@ $client = RdsClient::factory(array(
 ));
 
 $result = $client->describeDBInstances(array(
-    'DBInstanceIdentifier' => 'jrx-db',
+    'DBInstanceIdentifier' => 'jrxdb',
 ));
 
 $endpoint = ""; 
