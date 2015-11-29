@@ -2,6 +2,25 @@
 <html>
 <head>
 <style type="text/css">
+body{
+        padding: 0px;
+        margin: 0px;
+        background: #EFDBC0;
+}
+header{
+        background: #080808;
+        opacity: 0.9;
+        width: 100%;
+        height: 100px;
+        margin-right: 0px;
+}
+
+img.logo{
+        position: fixed;
+        width: 130px;
+        height: 80px;
+}
+
 ul.second-nav{
 	list-style-type: none;
 	position: relative;
@@ -28,10 +47,12 @@ ul.second-nav li:hover{
 }
 
 #content{
-	font-family: 'Titillium Web', sans-serif;
-	font-size: 45px;
-	text-align: center;
-	color: #272625;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-left: 20px;
+    text-align: left;
+    color: #272625;
 }
 
 #second-content{
@@ -46,20 +67,21 @@ ul.second-nav li:hover{
 <body>
 <header>
 	<div id="header-container">
-		<img class="logo" src="../image/gallery-art.jpg"><div id="name">Ice Cream Social</div>
+		<img class="logo" src="../image/gallery-art.jpg"><div id="name">Photo</div>
 		<ul class="second-nav">
 			<a href="logup.html"><li>log up</li></a>
 			<a href="login.html"><li>log in</li></a>
 		</ul>
 	</div>
-	</header>
-	
+</header>
+
+<div id="content">
 <!-- The data encoding type, enctype, MUST be specified as below -->
 <form enctype="multipart/form-data" action="result.php" method="POST">
     <!-- MAX_FILE_SIZE must precede the file input field -->
     <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
     <!-- Name of input element determines name in $_FILES array -->
-    Send this file: <input name="userfile" type="file" /><br />
+Send this file: <input name="userfile" type="file" /><br />
 Enter Email of user: <input type="email" name="useremail"><br />
 Enter Phone of user (1-XXX-XXX-XXXX): <input type="phone" name="phone">
 
@@ -73,7 +95,7 @@ Enter Phone of user (1-XXX-XXX-XXXX): <input type="phone" name="phone">
 Enter Email of user for gallery to browse: <input type="email" name="email">
 <input type="submit" value="Load Gallery" />
 </form>
-
+</div>
 
 </body>
 </html>
