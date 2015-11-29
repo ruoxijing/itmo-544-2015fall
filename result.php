@@ -29,59 +29,26 @@ $bucket = uniqid("php-jrx-",false);
 $result = $client->createBucket(array(
     'Bucket' => $bucket
 ));
-# AWS PHP SDK version 3 create bucket
-#$result = $s3->createBucket([
-#    'ACL' => 'public-read',
-#    'Bucket' => $bucket
-#]);
 $client->waitUntil('BucketExists', array('Bucket' => $bucket));
-#$client->waitUntilBucketExists(array('Bucket' => $bucket));
-#Old PHP SDK version 2
 $key = $uploadfile;
-
 $result = $client->describeDBInstances(array(
     'DBInstanceIdentifier' => 'jrxdb',
 ));
+$result = $client->putObject(array(
+    'ACL' => 'public-read',
+    'Bucket' => $bucket,
+    'Key' => $key,
+    'SourceFile' => $uploadfile 
+));
 
-#$result = $client->putObject(array(
-#    'ACL' => 'public-read',
-#    'Bucket' => $bucket,
-#    'Key' => $key,
-#    'SourceFile' => $uploadfile 
-#));
-# PHP version 3
-#$result = $s3->putObject([
-#    'ACL' => 'public-read',
-#    'Bucket' => $bucket,
-#   'Key' => $uploadfile
-#]);  
-
-#$url = $result['ObjectURL'];
-#echo $url;
-
-#$result = $rds->waitUntil('DBInstanceAvailable',['DBInstanceIdentifier' => 'jrx-db'
-#]);
-
-#$result = $rds->describeDBInstances([
-#   'DBInstanceIdentifier' => 'jrx-db',
-    #'Filters' => [
-    #    [
-    #        'Name' => '<string>', // REQUIRED
-    #        'Values' => ['<string>', ...], // REQUIRED
-    #    ],
-        // ...
-   # ],
-   # 'Marker' => '<string>',
-   # 'MaxRecords' => <integer>,
-#]);
+$url = $result['ObjectURL'];
+echo $url;
 
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
     echo "============\n". $endpoint . "================";
-
-#print_r($endpoint);  
-//echo "begin database";^M
+    
+//echo "begin database";
 #$link = mysqli_connect($endpoint,"controller","letmein888","customerrecords") or die("Error " . mysqli_error($link));
-#$link = mysqli_connect("jrxdb.ctwa8lj8lt5b.us-east-1.rds.amazonaws.com","rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
 $link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
 /* check connection */
 if (mysqli_connect_errno()) {
