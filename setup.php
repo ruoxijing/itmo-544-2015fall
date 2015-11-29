@@ -13,26 +13,13 @@ $result = $client->describeDBInstances(array(
 ));
 
 $endpoint = ""; 
-
-#foreach ($result->getPath('DBInstances/*/Endpoint/Address') as $ep) {
-    // Do something with the message
-#    echo "============". $ep . "================";
-#    $endpoint = $ep;
-#}
-
-#$result = $client->waitUntil('DBInstanceAvailable',['DBInstanceIdentifier' => 'jrx-db',
-#]);
-#print_r($result);
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
     echo "============\n". $endpoint . "================";
-
 print_r($endpoint);  
 echo "begin database";
 #$link = mysqli_connect($endpoint,"controller","ilovebunnies","itmo544db",3306) or die("Error " . mysqli_error($link));
 $link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
-#$link = mysqli_connect("jrxdb.ctwa8lj8lt5b.us-east-1.rds.amazonaws.com","rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
 
-#$link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
 /* check connection */
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
