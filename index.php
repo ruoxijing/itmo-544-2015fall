@@ -1,9 +1,59 @@
 <?php session_start(); ?>
 <html>
-<head><title>Hello app</title>
+<head>
+<style type="text/css">
+ul.second-nav{
+	list-style-type: none;
+	position: relative;
+	margin-left: 550px;
+	width: 1000px;
+	
+}
+
+ul.second-nav li{
+	position: relative;
+	width: 150px;
+	height: 80px;
+	float:left;
+	color: #D5D2CE;
+	font-size: 18px;
+	font-family:'Miltonian Tattoo', cursive;
+	margin-top: 20px;
+	margin-right: 10px;
+	text-align: center;
+}
+
+ul.second-nav li:hover{
+	color: #AD8148;
+}
+
+#content{
+	font-family: 'Titillium Web', sans-serif;
+	font-size: 45px;
+	text-align: center;
+	color: #272625;
+}
+
+#second-content{
+	font-family: 'Roboto', sans-serif;
+	font-size: 17px;
+	text-align: center;
+	color: #393836;
+}
+</style>
+<title>Welcome page</title>
 </head>
 <body>
-
+<header>
+	<div id="header-container">
+		<img class="logo" src="../image/gallery-art.jpg"><div id="name">Ice Cream Social</div>
+		<ul class="second-nav">
+			<a href="logup.html"><li>log up</li></a>
+			<a href="login.html"><li>log in</li></a>
+		</ul>
+	</div>
+	</header>
+	
 <!-- The data encoding type, enctype, MUST be specified as below -->
 <form enctype="multipart/form-data" action="result.php" method="POST">
     <!-- MAX_FILE_SIZE must precede the file input field -->
