@@ -1,4 +1,5 @@
 <?php session_start(); ?>
+
 <html>
 <head>
 <style type="text/css">
@@ -39,7 +40,6 @@ ul.second-nav li{
 	font-family:'Miltonian Tattoo', cursive;
 	margin-top: 20px;
 	margin-right: 10px;
-	text-align: center;
 }
 
 ul.second-nav li:hover{
@@ -51,7 +51,6 @@ ul.second-nav li:hover{
     font-size: 20px;
     margin-top: 40px;
     margin-left: 20px;
-    text-align: center;
     color: #272625;
 }
 
