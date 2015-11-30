@@ -198,7 +198,6 @@ $endpoint = "";
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
     echo "============\n". $endpoint . "================\n";
 
-//echo "begin database";
 #$link = mysqli_connect($endpoint,"controller","letmein888","customerrecords") or die("Error " . mysqli_error($link));
 $link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
 
@@ -213,12 +212,13 @@ echo "\n" . $email . "gallery\n";
 $link->real_query("SELECT * FROM items WHERE email = '$email'"); 
 $res = $link->use_result();
 echo "Result set order...\n";
-#while ($row = $res->fetch_assoc()) {
-#    echo "<img src =\" " . $row['s3rawurl'] . "\" /><img src =\"" .$row['s3finishedurl'] . "\"/>";
-#echo $row['id'] . "Email: " . $row['email'];
-#}
+while ($row = $res->fetch_assoc()) {
+    echo "<img id=\"item5\" src =\" " . $row['s3rawurl'] . "\" /><img src =\"" .$row['s3finishedurl'] . "\"/>";
+echo $row['id'] . "Email: " . $row['email'];
+}
+$link->close();
 ?>
-	<div id="header-container">
+<!--	<div id="header-container">
 		<img class="logo" src="images/gallery-art.jpg"><div id="name">Gallery</div>
 		<ul class="second-nav">
 		</ul>
@@ -252,14 +252,10 @@ echo "Result set order...\n";
     <div id="main" role="main">
 
       <ul id="tiles">
-        <!-- These are our grid blocks -->
-        <!--<li><img src="images/test.jpg" width="200" height="283"><p>1</p></li>-->
-
-        <!-- End of grid blocks -->
+      
       </ul>
     </div>
   </div>
-<?php $link->close(); ?>
 </body>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -269,5 +265,8 @@ document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.
 try {
 var pageTracker = _gat._getTracker("UA-16288001-1");
 pageTracker._trackPageview();
-} catch(err) {}</script>
+} catch(err) {}
+</script>
+-->
+</body>
 </html>
