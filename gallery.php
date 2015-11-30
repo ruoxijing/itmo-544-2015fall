@@ -1,6 +1,25 @@
 <html>
 <head>
 <style type="text/css">
+body{
+        padding: 0px;
+        margin: 0px;
+        background: #EFDBC0;
+}
+header{
+        background: #080808;
+        opacity: 0.9;
+        width: 100%;
+        height: 100px;
+        margin-right: 0px;
+}
+
+img.logo{
+        position: fixed;
+        width: 130px;
+        height: 80px;
+}
+
 .mfp-container {
   text-align: center;
   position: absolute;
@@ -41,6 +60,13 @@
 
 </head>
 <body>
+<header>
+	<div id="header-container">
+		<img class="logo" src="images/gallery-art.jpg"><div id="name">Gallery</div>
+		<ul class="second-nav">
+		</ul>
+	</div>
+</header>
 
 <?php
 session_start();
@@ -59,7 +85,7 @@ $result = $client->describeDBInstances([
 
 $endpoint = "";
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
-    echo "============\n". $endpoint . "================";
+    echo "============\n". $endpoint . "================\n";
 
 //echo "begin database";
 #$link = mysqli_connect($endpoint,"controller","letmein888","customerrecords") or die("Error " . mysqli_error($link));
@@ -72,15 +98,7 @@ if (mysqli_connect_errno()) {
 }
 
 //below line is unsafe - $email is not checked for SQL injection -- don't do this in real life or use an ORM instead
-echo $email "gallery";
-$link->real_query("SELECT * FROM items WHERE email = '$email'"); 
-$res = $link->use_result();
-echo "Result set order...\n";
-while ($row = $res->fetch_assoc()) {
-    echo "<img src =\" " . $row['s3rawurl'] . "\" /><img src =\"" .$row['s3finishedurl'] . "\"/>";
-echo $row['id'] . "Email: " . $row['email'];
-}
-$link->close();
+echo "\n" . $email . "gallery\n";
 ?>
 <div id="container">
     <header>
@@ -90,7 +108,17 @@ $link->close();
 
       <ul id="tiles">
         <!-- These are our grid blocks -->
-        <li><img src="images/test.jpg" width="200" height="283"><p>1</p></li>
+        <!--<li><img src="images/test.jpg" width="200" height="283"><p>1</p></li>-->
+<?php
+$link->real_query("SELECT * FROM items WHERE email = '$email'"); 
+$res = $link->use_result();
+echo "Result set order...\n";
+while ($row = $res->fetch_assoc()) {
+    echo "<img src =\" " . $row['s3rawurl'] . "\" /><img src =\"" .$row['s3finishedurl'] . "\"/>";
+echo $row['id'] . "Email: " . $row['email'];
+}
+$link->close();
+?>
         <!-- End of grid blocks -->
       </ul>
     </div>
