@@ -3,20 +3,21 @@
 <head>
 <style type="text/css">
 body{
-        padding: 0px;
-        margin: 0px;
-        background: #EFDBC0;
+	margin:0px;
+    font-family: 'Poiret One', cursive;
+    background-color: #E4F7FF;
 }
+
 header{
-        background: #080808;
-        opacity: 0.9;
+	position: relative;
+        background-image: linear-gradient(90deg, #063053, #FFFFFF);
+        opacity: 0.7;
         width: 100%;
-        height: 100px;
-        margin-right: 0px;
+        height: 80px;
 }
 
 img.logo{
-        position: fixed;
+        position: absolute;
         width: 130px;
         height: 80px;
 }
