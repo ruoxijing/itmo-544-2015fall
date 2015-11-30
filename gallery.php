@@ -1,3 +1,4 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
 <style type="text/css">
@@ -43,21 +44,11 @@ img.logo{
 </style>
 
 <title>Gallery</title>
-	<meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-  <title>jQuery Wookmark Plug-in Example</title>
-  <meta name="description" content="An very basic example of how to use the Wookmark jQuery plug-in.">
-  <meta name="author" content="Christoph Ono, Sebastian Helzle">
-
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-
-  <!-- CSS Reset -->
-  <link rel="stylesheet" href="../css/reset.css">
-
-  <!-- Global CSS for the page and tiles -->
-  <link rel="stylesheet" href="../css/main.css">
-
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+		
+		<script type="text/javascript" src="../../jquery.zoomooz.min.js"></script>
 </head>
 <body>
 <header>
@@ -67,7 +58,21 @@ img.logo{
 		</ul>
 	</div>
 </header>
-
+<div class="zoomViewport">
+			<div id="container" class="zoomContainer">
+                <div id="item1" class="zoomTarget"></div>
+                <div id="item2" class="zoomTarget"></div>
+                <div id="item2b" class="zoomTarget"></div>
+                <div id="item3" class="zoomTarget">
+                    <div id="item3b" class="zoomTarget"></div>
+                </div>
+                <div id="item4" class="zoomTarget"></div>
+			</div>
+	    </div>
+	    <div id="navigation">
+			<div id="prev" class="zoomButton" data-type="prev" data-root=".zoomViewport">&lt;</div>
+			<div id="next" class="zoomButton" data-type="next" data-root=".zoomViewport">&gt;</div>
+		</div>
 <?php
 session_start();
 $email = $_POST["email"];
@@ -124,36 +129,14 @@ $link->close();
     </div>
   </div>
 
-  <!-- include jQuery -->
-  <script src="../libs/jquery.min.js"></script>
-
-  <!-- Include the plug-in -->
-  <script src="../jquery.wookmark.js"></script>
-
-  <!-- Once the page is loaded, initalize the plug-in. -->
-  <script type="text/javascript">
-    (function ($){
-      var handler = $('#tiles li');
-
-      handler.wookmark({
-          // Prepare layout options.
-          autoResize: true, // This will auto-update the layout when the browser window is resized.
-          container: $('#main'), // Optional, used for some extra CSS styling
-          offset: 5, // Optional, the distance between grid items
-          outerOffset: 10, // Optional, the distance to the containers border
-          itemWidth: 210 // Optional, the width of a grid item
-      });
-
-      // Capture clicks on grid items.
-      handler.click(function(){
-        // Randomize the height of the clicked item.
-        var newHeight = $('img', this).height() + Math.round(Math.random() * 300 + 30);
-        $(this).css('height', newHeight+'px');
-
-        // Update the layout.
-        handler.wookmark();
-      });
-    })(jQuery);
-  </script>
 </body>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-16288001-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
 </html>
