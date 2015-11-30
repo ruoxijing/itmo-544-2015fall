@@ -72,7 +72,7 @@ if (mysqli_connect_errno()) {
 }
 
 //below line is unsafe - $email is not checked for SQL injection -- don't do this in real life or use an ORM instead
-echo $email gallery;
+echo $email "gallery";
 $link->real_query("SELECT * FROM items WHERE email = '$email'"); 
 $res = $link->use_result();
 echo "Result set order...\n";
@@ -90,7 +90,7 @@ $link->close();
 
       <ul id="tiles">
         <!-- These are our grid blocks -->
-        <li><img src="../images/test.jpg" width="200" height="283"><p>1</p></li>
+        <li><img src="images/test.jpg" width="200" height="283"><p>1</p></li>
         <!-- End of grid blocks -->
       </ul>
     </div>
