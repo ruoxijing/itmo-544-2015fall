@@ -49,9 +49,9 @@ ul.second-nav li:hover{
 #content{
     font-family: 'Titillium Web', sans-serif;
     font-size: 20px;
-    margin-top: 20px;
+    margin-top: 40px;
     margin-left: 20px;
-    text-align: left;
+    text-align: center;
     color: #272625;
 }
 
@@ -67,7 +67,7 @@ ul.second-nav li:hover{
 <body>
 <header>
 	<div id="header-container">
-		<img class="logo" src="image/gallery-art.jpg"><div id="name">Photo</div>
+		<img class="logo" src="images/gallery-art.jpg"><div id="name">Index</div>
 		<ul class="second-nav">
 			<a href="logup.php"><li>log up</li></a>
 			<a href="login.php"><li>log in</li></a>
