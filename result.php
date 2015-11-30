@@ -1,11 +1,11 @@
 <?php
 // Start the session
 session_start();
-if(!isset($_SESSION['finish'])){
-	$_SESSION['finish'] = 'ELB';
-	session_write_close();
-	header('Location: '.$_SERVER['PHP_SELF']);
-}
+#if(!isset($_SESSION['FINISH'])){
+#	$_SESSION['FINISH'] = 'ELB';
+#	session_write_close();
+#	header('Location: '.$_SERVER['FINISH']);
+#}
 // In PHP versions earlier than 4.1.0, $HTTP_POST_FILES should be used instead
 // of $_FILES.
 $useremail = $_POST["useremail"];
@@ -36,9 +36,7 @@ $result = $client->createBucket(array(
 ));
 $client->waitUntil('BucketExists', array('Bucket' => $bucket));
 $key = $uploadfile;
-#$result = $client->describeDBInstances(array(
-#    'DBInstanceIdentifier' => 'jrxdb',
-#));
+
 $result = $client->putObject(array(
     'ACL' => 'public-read',
     'Bucket' => $bucket,
@@ -49,49 +47,7 @@ $result = $client->putObject(array(
 $url = $result['ObjectURL'];
 echo $url;
 
-// Max vert or horiz resolution
-$maxsize=550;
-// create new Imagick object
-$image = new Imagick('../images/test.jpg');
-// Resizes to whichever is larger, width or height
-if($image->getImageHeight() <= $image->getImageWidth())
-{
-// Resize image using the lanczos resampling algorithm based on width
-$image->resizeImage($maxsize,0,Imagick::FILTER_LANCZOS,1);
-}
-else
-{
-// Resize image using the lanczos resampling algorithm based on height
-$image->resizeImage(0,$maxsize,Imagick::FILTER_LANCZOS,1);
-}
-// Set to use jpeg compression
-$image->setImageCompression(Imagick::COMPRESSION_JPEG);
-// Set compression level (1 lowest quality, 100 highest quality)
-$image->setImageCompressionQuality(75);
-// Strip out unneeded meta data
-$image->stripImage();
-// Writes resultant image to output directory
-$image->writeImage('../images/testwrite.jpg');
-// Destroys Imagick object, freeing allocated resources in the process
-$image->destroy();
-
-$bucket = uniqid("php-jrx-finished-",false);
-$result = $client->createBucket(array(
-    'Bucket' => $bucket
-));
-$client->waitUntil('BucketExists', array('Bucket' => $bucket));
-$key = $uploadfile;
-#$result = $client->describeDBInstances(array(
-#    'DBInstanceIdentifier' => 'jrxdb',
-#));
-$result = $client->putObject(array(
-    'ACL' => 'public-read',
-    'Bucket' => $bucket,
-    'Key' => $key,
-    'SourceFile' => $uploadfile 
-));
-$finishedurl = $result['ObjectURL'];
-echo $finishedurl;
+$finishedurl = 'none';
 
 use Aws\Rds\RdsClient;
 $client = RdsClient::factory(array(
@@ -115,7 +71,7 @@ if (mysqli_connect_errno()) {
     exit();
 }
 /* Prepared statement, stage 1: prepare */
-if (!($stmt = $link->prepare("INSERT INTO items (id, email,phone,filename,s3rawurl,s3finishedurl,status,issubscribed) VALUES (NULL,?,?,?,?,?,?,?)"))) {
+if (!($stmt = $link->prepare("INSERT INTO items (id, email,phone,filename,s3rawurl,s3finishedurl,status,issubscribed,password) VALUES (NULL,?,?,?,?,?,?,?,?)"))) {
     echo "Prepare failed: (" . $link->errno . ") " . $link->error;
 }
 $email = $_POST['useremail'];
@@ -123,9 +79,10 @@ $phone = $_POST['phone'];
 $s3rawurl = $url; 
 $filename = basename($_FILES['userfile']['name']);
 $s3finishedurl = $finishedurl;
-$status =0;
-$issubscribed=0;
-$stmt->bind_param("sssssii",$email,$phone,$filename,$s3rawurl,$s3finishedurl,$status,$issubscribed);
+$status = 0;
+$issubscribed = 0;
+$password = $_POST["password"];
+$stmt->bind_param("sssssiis",$email,$phone,$filename,$s3rawurl,$s3finishedurl,$status,$issubscribed,$password);
 if (!$stmt->execute()) {
     echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 }
