@@ -229,9 +229,9 @@ $link->close();
 			<div id="container" class="zoomContainer">
                 <div id="item1">
                 <?php 
-                while ($row = $res->fetch_assoc()) {
-                echo "<img class=\"zoomTarget\" src =\" " . $row['s3rawurl'] . "\" />";
-                echo $row['id'] . "Email: " . $row['email'];
+#                while ($row = $res->fetch_assoc()) {
+#                echo "<img class=\"zoomTarget\" src =\" " . $row['s3rawurl'] . "\" />";
+#                echo $row['id'] . "Email: " . $row['email'];
                 ?>
                 </div>
                 <div id="item2" class="zoomTarget"></div>
