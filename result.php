@@ -71,7 +71,7 @@ if (mysqli_connect_errno()) {
     exit();
 }
 /* Prepared statement, stage 1: prepare */
-if (!($stmt = $link->prepare("INSERT INTO items (id, email,phone,filename,s3rawurl,s3finishedurl,status,issubscribed,password) VALUES (NULL,?,?,?,?,?,?,?,?)"))) {
+if (!($stmt = $link->prepare("INSERT INTO items (id, email,phone,filename,s3rawurl,s3finishedurl,status,issubscribed) VALUES (NULL,?,?,?,?,?,?,?)"))) {
     echo "Prepare failed: (" . $link->errno . ") " . $link->error;
 }
 $email = $_POST['useremail'];
@@ -81,8 +81,8 @@ $filename = basename($_FILES['userfile']['name']);
 $s3finishedurl = $finishedurl;
 $status = 0;
 $issubscribed = 0;
-$password = $_POST["password"];
-$stmt->bind_param("sssssiis",$email,$phone,$filename,$s3rawurl,$s3finishedurl,$status,$issubscribed,$password);
+#$password = $_POST["password"];
+$stmt->bind_param("sssssii",$email,$phone,$filename,$s3rawurl,$s3finishedurl,$status,$issubscribed);
 if (!$stmt->execute()) {
     echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 }
