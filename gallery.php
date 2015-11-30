@@ -21,26 +21,153 @@ img.logo{
         height: 80px;
 }
 
-.mfp-container {
-  text-align: center;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  padding: 0 8px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box; }
+#prev, #next {
+    position:absolute;
+    width:50px;
+    height:50px;
+    border:1px solid #aaa;
+    background-color:#dca;
+    color:white;
+    z-index:10;
+    font-size:40px;
+    line-height:45px;
+    text-align:center;
+    font-family:Helvetica, sans-serif;
+    cursor:pointer;
+    cursor:hand;
+}
 
-.mfp-container:before {
-  content: '';
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle; }
+#prev:hover,#next:hover {
+	background-color:#ba9;
+	border: 1px solid #999;
+}
 
-.mfp-align-top .mfp-container:before {
-  display: none; }
+#navigation {
+	width:800px;
+	position:relative;
+	margin-top:2em;
+	margin-left:auto;
+	margin-right:auto;
+	height:70px;
+}
+
+#prev {
+    left:0px;
+}
+
+#next {
+	right:0px;
+}
+
+.zoomContainer {
+	margin:0;
+    padding:0;
+    width:800px;
+    height:600px;
+    position:relative;
+}
+
+.zoomTarget {
+    width:300px;
+    height:300px;
+    position:absolute;
+}
+
+.zoomViewport {
+	margin:0;
+    padding:0;
+    width:800px;
+	height:600px;
+	border:1px solid #ccc;
+	background-color: white;
+	overflow:hidden;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:1em;
+}
+
+h3 {
+	font-family: Helvetica Neue, Helvetica, sans-serif;
+	display:block;
+	width:800px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:5%;
+	color:#444;
+}
+
+div {
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+#item1 {
+	background-color:#fcc;
+	position:absolute;
+	left:50px;
+	top:50px;
+	width:250px;
+	height:250px;
+	border:1px solid red;
+}
+
+#item2 {
+	background-color:#ccf;
+	position:absolute;
+	bottom:40px;
+	right:40px;
+	width:250px;
+	height:200px;
+	border:1px solid blue;
+}
+
+#item3 {
+	background-color:#cfc;
+	position:absolute;
+	top:0px;
+	right:100px;
+	width:250px;
+	height:200px;
+	border:1px solid green;
+	-webkit-transform: rotate(10deg) translate(0px,0px);
+	-moz-transform: rotate(10deg) translate(0px,0px);
+	-o-transform: rotate(10deg) translate(0px,0px);
+}
+
+#item3b {
+	background-color:#cff;
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:200px;
+	height:100px;
+	border:1px solid cyan;
+	-webkit-transform: rotate(10deg) translate(200px,200px);
+	-moz-transform: rotate(10deg) translate(200px,200px);
+	-o-transform: rotate(10deg) translate(200px,200px);
+}
+
+#item2b {
+	background-color:#99f;
+	position:absolute;
+	bottom:80px;
+	right:80px;
+	width:100px;
+	height:100px;
+	border:1px solid blue;
+}
+
+#item4 {
+	background-color:#ffc;
+	position:absolute;
+	bottom:200px;
+	left:200px;
+	width:50px;
+	height:50px;
+	border:1px solid yellow;
+	-webkit-transform: rotate(30deg) skew(20deg);
+	-moz-transform: rotate(30deg) skew(20deg);
+	-o-transform: rotate(30deg) skew(20deg);
+}
 </style>
 
 <title>Gallery</title>
@@ -52,27 +179,6 @@ img.logo{
 </head>
 <body>
 <header>
-	<div id="header-container">
-		<img class="logo" src="images/gallery-art.jpg"><div id="name">Gallery</div>
-		<ul class="second-nav">
-		</ul>
-	</div>
-</header>
-<div class="zoomViewport">
-			<div id="container" class="zoomContainer">
-                <div id="item1" class="zoomTarget"></div>
-                <div id="item2" class="zoomTarget"></div>
-                <div id="item2b" class="zoomTarget"></div>
-                <div id="item3" class="zoomTarget">
-                    <div id="item3b" class="zoomTarget"></div>
-                </div>
-                <div id="item4" class="zoomTarget"></div>
-			</div>
-	    </div>
-	    <div id="navigation">
-			<div id="prev" class="zoomButton" data-type="prev" data-root=".zoomViewport">&lt;</div>
-			<div id="next" class="zoomButton" data-type="next" data-root=".zoomViewport">&gt;</div>
-		</div>
 <?php
 session_start();
 $email = $_POST["email"];
@@ -104,31 +210,56 @@ if (mysqli_connect_errno()) {
 
 //below line is unsafe - $email is not checked for SQL injection -- don't do this in real life or use an ORM instead
 echo "\n" . $email . "gallery\n";
+$link->real_query("SELECT * FROM items WHERE email = '$email'"); 
+$res = $link->use_result();
+echo "Result set order...\n";
+#while ($row = $res->fetch_assoc()) {
+#    echo "<img src =\" " . $row['s3rawurl'] . "\" /><img src =\"" .$row['s3finishedurl'] . "\"/>";
+#echo $row['id'] . "Email: " . $row['email'];
+#}
 ?>
+	<div id="header-container">
+		<img class="logo" src="images/gallery-art.jpg"><div id="name">Gallery</div>
+		<ul class="second-nav">
+		</ul>
+	</div>
+</header>
+<div class="zoomViewport">
+			<div id="container" class="zoomContainer">
+                <div id="item1">
+                <?php 
+                while ($row = $res->fetch_assoc()) {
+                echo "<img class=\"zoomTarget\" src =\" " . $row['s3rawurl'] . "\" />";
+                echo $row['id'] . "Email: " . $row['email'];
+                ?>
+                </div>
+                <div id="item2" class="zoomTarget"></div>
+                <div id="item2b" class="zoomTarget"></div>
+                <div id="item3" class="zoomTarget">
+                    <div id="item3b" class="zoomTarget"></div>
+                </div>
+                <div id="item4" class="zoomTarget"><img src="test.jpg" style="width: 50px; height: 50px;"></div>
+			</div>
+	    </div>
+	    <div id="navigation">
+			<div id="prev" class="zoomButton" data-type="prev" data-root=".zoomViewport">&lt;</div>
+			<div id="next" class="zoomButton" data-type="next" data-root=".zoomViewport">&gt;</div>
+		</div>
 <div id="container">
     <header>
-      <h1>jQuery Wookmark Plug-in</h1>
+      <h1>Pictures</h1>
     </header>
     <div id="main" role="main">
 
       <ul id="tiles">
         <!-- These are our grid blocks -->
         <!--<li><img src="images/test.jpg" width="200" height="283"><p>1</p></li>-->
-<?php
-$link->real_query("SELECT * FROM items WHERE email = '$email'"); 
-$res = $link->use_result();
-echo "Result set order...\n";
-while ($row = $res->fetch_assoc()) {
-    echo "<img src =\" " . $row['s3rawurl'] . "\" /><img src =\"" .$row['s3finishedurl'] . "\"/>";
-echo $row['id'] . "Email: " . $row['email'];
-}
-$link->close();
-?>
+
         <!-- End of grid blocks -->
       </ul>
     </div>
   </div>
-
+<?php $link->close(); ?>
 </body>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
