@@ -32,7 +32,7 @@ ul.second-nav{
 ul.second-nav li{
 	position: relative;
 	width: 150px;
-	height: 80px;
+	height: 40px;
 	float:left;
 	color: #D5D2CE;
 	font-size: 18px;
@@ -67,10 +67,10 @@ ul.second-nav li:hover{
 <body>
 <header>
 	<div id="header-container">
-		<img class="logo" src="../image/gallery-art.jpg"><div id="name">Photo</div>
+		<img class="logo" src="image/gallery-art.jpg"><div id="name">Photo</div>
 		<ul class="second-nav">
-			<a href="logup.html"><li>log up</li></a>
-			<a href="login.html"><li>log in</li></a>
+			<a href="logup.php"><li>log up</li></a>
+			<a href="login.php"><li>log in</li></a>
 		</ul>
 	</div>
 </header>
@@ -83,7 +83,7 @@ ul.second-nav li:hover{
     <!-- Name of input element determines name in $_FILES array -->
 Send this file: <input name="userfile" type="file" /><br />
 Enter Email of user: <input type="email" name="useremail"><br />
-Enter Phone of user (1-XXX-XXX-XXXX): <input type="phone" name="phone">
+Enter Phone of user (1XXXXXXXXXX): <input type="phone" name="phone">
 
 
 <input type="submit" value="Send File" />
@@ -95,6 +95,10 @@ Enter Phone of user (1-XXX-XXX-XXXX): <input type="phone" name="phone">
 Enter Email of user for gallery to browse: <input type="email" name="email">
 <input type="submit" value="Load Gallery" />
 </form>
+</div>
+
+<div id="content">
+<a href="introspection.php"><li>Backup databases</li></a>
 </div>
 
 </body>
