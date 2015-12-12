@@ -182,6 +182,8 @@ div {
 <header>
 <?php
 session_start();
+date_default_timezone_set("Etc/GMT+6");
+echo "Time: " . date('Y-m-d H:i:s');
 $email = $_POST["email"];
 
 require 'vendor/autoload.php';
