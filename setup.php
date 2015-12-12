@@ -1,7 +1,5 @@
 <?php
-
 require 'vendor/autoload.php';
-
 use Aws\Rds\RdsClient;
 $client = RdsClient::factory(array(
 'version'=>'latest',
@@ -12,12 +10,10 @@ $result = $client->describeDBInstances(array(
     'DBInstanceIdentifier' => 'jrxdb',
 ));
 
-$endpoint = ""; 
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
-    echo "============\n". $endpoint . "================";
-print_r($endpoint);  
+    echo "============\n". $endpoint . "================"; 
 echo "begin database";
-#$link = mysqli_connect($endpoint,"controller","ilovebunnies","itmo544db",3306) or die("Error " . mysqli_error($link));
+
 $link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
 
 /* check connection */
@@ -25,17 +21,7 @@ if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
     exit();
 }
-/*
-$delete_table = 'DELETE TABLE student';
-$del_tbl = $link->query($delete_table);
-if ($delete_table) {
-        echo "Table student has been deleted";
-}
-else {
-        echo "error!!";
 
-}
-*/
 $create_table = 'CREATE TABLE IF NOT EXISTS items  
 (
     id INT NOT NULL AUTO_INCREMENT,
@@ -46,7 +32,8 @@ $create_table = 'CREATE TABLE IF NOT EXISTS items
     s3finishedurl VARCHAR(255) NOT NULL,
     status INT NOT NULL,
     issubscribed INT NOT NULL,
-    PRIMARY KEY(id)
+    PRIMARY KEY(id),
+    password VARCHAR(255) NOT NULL
 )';
 $create_tbl = $link->query($create_table);
 if ($create_table) {
