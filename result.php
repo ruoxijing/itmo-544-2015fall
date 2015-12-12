@@ -6,8 +6,7 @@ session_start();
 #	session_write_close();
 #	header('Location: '.$_SERVER['FINISH']);
 #}
-// In PHP versions earlier than 4.1.0, $HTTP_POST_FILES should be used instead
-// of $_FILES.
+
 $useremail = $_POST["useremail"];
 echo $useremail;
 $uploaddir = '/tmp/';
@@ -62,15 +61,14 @@ $result = $client->describeDBInstances(array(
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
     echo "============\n". $endpoint . "================";
     
-//echo "begin database";
-#$link = mysqli_connect($endpoint,"controller","letmein888","customerrecords") or die("Error " . mysqli_error($link));
+echo "begin database";
 $link = mysqli_connect($endpoint,"rjing","mypoorphp","itmo544mp1") or die("Error " . mysqli_error($link));
 /* check connection */
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
     exit();
 }
-/* Prepared statement, stage 1: prepare */
+
 if (!($stmt = $link->prepare("INSERT INTO items (id, email,phone,filename,s3rawurl,s3finishedurl,status,issubscribed) VALUES (NULL,?,?,?,?,?,?,?)"))) {
     echo "Prepare failed: (" . $link->errno . ") " . $link->error;
 }
@@ -87,7 +85,7 @@ if (!$stmt->execute()) {
     echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 }
 printf("%d Row inserted.\n", $stmt->affected_rows);
-/* explicit close recommended */
+
 $stmt->close();
 $link->real_query("SELECT * FROM items");
 $res = $link->use_result();
@@ -96,8 +94,15 @@ while ($row = $res->fetch_assoc()) {
     echo $row['id'] . " " .$row['email']. " " .$row['phone'];
 }
 $link->close();
-//add code to detect if subscribed to SNS topic 
-//if not subscribed then subscribe the user and UPDATE the column in the database with a new value 0 to 1 so that then each time you don't have to resubscribe them
-// add code to generate SQS Message with a value of the ID returned from the most recent inserted piece of work
-//  Add code to update database to UPDATE status column to 1 (in progress)
+#sns service
+ARN=(`aws sns create-topic --name mp2`)
+
+echo "This is the ARN: $ARN"
+
+aws sns set-topic-attributes --topic-arn $ARN --attribute-name DisplayName --attribute-value mp2
+
+aws sns subscribe --topic-arn $ARN --protocol sms --notification-endpoint 13127215036
+
+aws sns publish --topic-arn $ARN --message "best code"
+
 ?>
